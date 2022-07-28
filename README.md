@@ -21,7 +21,7 @@ $ make
 # Run the testing service
 $ go run service/service.go
 # Now run the server/proxy
-$ go run proxy/proxy.go -proxy-url http://localhost:8080
+$ go run proxy.go -proxy-url http://localhost:8080
 # Now, hit the proxy via TLS and see how the request is forwarded
 $ curl -k https://localhost
 Hello, this is the service.

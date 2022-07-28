@@ -10,6 +10,8 @@ import (
 	"os"
 )
 
+const version = "0.0.1"
+
 var (
 	flgHelp     bool
 	flgProxyUrl string
