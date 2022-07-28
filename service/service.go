@@ -9,7 +9,7 @@ import (
 
 func handleRequest(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
-	w.Write([]byte("This is the service.\n"))
+	w.Write([]byte("Hello, this is the service.\n"))
 }
 
 func main() {

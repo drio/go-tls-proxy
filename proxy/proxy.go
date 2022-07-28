@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -9,13 +10,32 @@ import (
 	"os"
 )
 
+var (
+	flgHelp     bool
+	flgProxyUrl string
+	flgPort string
+)
+
+func parseCmdLineFlags() {
+	flag.BoolVar(&flgHelp, "help", false, "if true, show help")
+	flag.StringVar(&flgProxyUrl, "proxy-url", "", "Url to proxy to. E.g. http://localhost:8080")
+	flag.StringVar(&flgPort, "port", "443", "Port for the proxy to listen to. Defaults to 443")
+	flag.Parse()
+}
+
 func main() {
-	port := "443"
-	if len(os.Args) == 2 {
-		port = os.Args[1]
+	parseCmdLineFlags()
+	if flgHelp {
+		flag.Usage()
+		os.Exit(0)
 	}
 
-	remote, err := url.Parse("http://localhost:8080")
+	if flgProxyUrl == "" {
+		flag.Usage()
+		os.Exit(0)
+	}
+
+	remote, err := url.Parse(flgProxyUrl)
 	if err != nil {
 		panic(err)
 	}
@@ -35,8 +55,8 @@ func main() {
 		w.Write([]byte("Metrics here"))
 	})
 
-	fmt.Printf("Server, listening on :%s\n", port)
-	err = http.ListenAndServeTLS(fmt.Sprintf(":%s", port), "server.crt", "server.key", nil)
+  fmt.Printf("Proxying, listening on port:%s proxy to url:%s\n", flgPort, flgProxyUrl)
+	err = http.ListenAndServeTLS(fmt.Sprintf(":%s", flgPort), "server.crt", "server.key", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
