@@ -29,3 +29,8 @@ Hello, this is the service.
 
 Notice how we use curl's `-k` flag here to ignore the CA trust error.
 In a real deployment, you want to tell your OS that you [trust the certificate](https://gist.github.com/drio/920e08aee8aa0d2ff549e2c38b2beb22#in-math-we-trust).
+
+## Docker
+
+Here you have [an example](https://github.com/drio/observability_stack/tree/main/docker-obs/tls-jmx-proxy) on
+how to run this via docker. Docker-compose entry is [here](https://github.com/drio/observability_stack/blob/main/templates/docker-compose.yml.j2#L122).
